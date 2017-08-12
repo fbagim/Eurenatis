@@ -1,13 +1,13 @@
 package com.jetsetter.controller;
 
 import com.jetsetter.model.Country;
+import com.jetsetter.model.Hotel;
 import com.jetsetter.service.CountryService;
+import com.jetsetter.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,21 +15,58 @@ import java.util.List;
  * Created by gim on 8/9/17.
  */
 @RestController
-@RequestMapping("/jetsetter/api")
+@RequestMapping("/jetsetter/api/hotel")
+
 public class HotelController {
     @Autowired
-    CountryService countryService;
+    HotelService hotelService;
 
     // -------------------Retrieve all students --------------------------------------------
 
-    @RequestMapping(value = "/country/", method = RequestMethod.GET)
+    @RequestMapping(value = "/{countryCode}", method = RequestMethod.GET)
 
-    public ResponseEntity getAllCountry() {
-        List<Country> allCountry = countryService.findAll();
-        if (allCountry.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity getAllHotels() {
+        List<Hotel> allHotels = hotelService.findAll();
+        if (allHotels.isEmpty()) {
+            return new ResponseEntity<List<Country>>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<Country>>(allCountry, HttpStatus.OK);
+        return new ResponseEntity<List<Hotel>>(allHotels, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{countryCode}/{hotelCode}", method = RequestMethod.GET)
+    public ResponseEntity getHotel(@PathVariable String countryCode, @PathVariable String hotelCode) {
+        Hotel  hotel = new Hotel();
+
+        List<Hotel> result = hotelService.findByHotelCodeAndCountryCode(hotelCode, countryCode);
+
+        if (result == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public ResponseEntity addHotel(@RequestBody Hotel hotel) {
+        Hotel hotel1Res = hotelService.save(hotel);
+        if (hotel1Res == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<Hotel>(hotel1Res, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public ResponseEntity updateCountry(Hotel hotel) {
+//        List<Hotel> allCountry = hotelService.save(hotel);
+//        if (allCountry.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//        return new ResponseEntity<List<Country>>(allCountry, HttpStatus.OK);
+        return null;
+    }
+
+    @RequestMapping(value = "/{countryCode}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteHotel(@PathVariable String id) {
+        hotelService.delete(id);
+        return new ResponseEntity(id, HttpStatus.OK);
+    }
 }

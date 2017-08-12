@@ -1,7 +1,9 @@
 package com.jetsetter.service;
 
 import com.jetsetter.model.Country;
+import com.jetsetter.respository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,32 +13,37 @@ import java.util.List;
  */
 
 @Service
-public class CountryServiceImpl implements CountryService {
-    private CountryService countryService;
+public class CountryServiceImpl  implements CountryService{
+    @Autowired(required = true)
+    private CountryRepository countryRepository;
 
-    @Autowired
-    public void setCountryService(CountryService countryService) {
-        this.countryService = countryService;
+    public CountryRepository getCountryRepository() {
+        return countryRepository;
+    }
+
+    public void setCountryRepository(CountryRepository countryRepository) {
+        this.countryRepository = countryRepository;
+    }
+
+
+    @Override
+    public Country save(Country country) {
+        return countryRepository.save(country);
     }
 
     @Override
-    public Country save(Country book) {
-        return null;
-    }
-
-    @Override
-    public void delete(Country book) {
-
+    public void delete(String id) {
+        countryRepository.delete(id);
     }
 
     @Override
     public Country findOne(String id) {
-        return null;
+        return countryRepository.findOne(id);
     }
 
     @Override
-    public Iterable<Country> findAll() {
-        return null;
+    public List<Country> findAll() {
+        return countryRepository.findAll();
     }
 
     @Override

@@ -1,5 +1,11 @@
 package com.jetsetter.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
@@ -7,12 +13,27 @@ import java.util.Set;
 /**
  * Created by gim on 8/7/17.
  */
+@Document(collection = "Hotel")
 public class Hotel implements Serializable {
 
+    @Indexed(unique = true)
+    @JsonProperty("hotelId")
     private String hotelId;
+
+    @JsonProperty("name")
     private String name;
-    private List<Room> rooms;
+
+    @JsonProperty("countryCode")
+    private String countryCode;
+
+    @JsonProperty("zipcode")
+    private int zipcode;
+
+    @JsonProperty("address")
     private String address;
+
+    @JsonProperty("rooms")
+    private List<Room> rooms;
 
     public List<Room> getRooms() {
         return rooms;
@@ -30,7 +51,6 @@ public class Hotel implements Serializable {
         this.address = address;
     }
 
-
     public String getHotelId() {
         return hotelId;
     }
@@ -47,14 +67,4 @@ public class Hotel implements Serializable {
         this.name = name;
     }
 
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
 }

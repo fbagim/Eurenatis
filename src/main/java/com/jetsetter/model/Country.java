@@ -1,37 +1,42 @@
 package com.jetsetter.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-@Document(indexName = "jetsetter", type = "Country")
+@Document(collection = "Country")
 public class Country implements Serializable {
+
     @Id
-    private String countryCode;
+    @JsonProperty("countryIso")
+    private String countryIso;
+
+    @JsonProperty("dialCode")
+    private String dialCode;
+
+    @JsonProperty("countryName")
     private String countryName;
 
-    @Field(type = FieldType.Nested)
-    private List<City> cities;
 
-    public List<City> getCities() {
-        return cities;
+    public String getCountryIso() {
+        return countryIso;
     }
 
-    public void setCities(List<City> cities) {
-        this.cities = cities;
+    public void setCountryIso(String countryIso) {
+        this.countryIso = countryIso;
     }
 
-    public String getCountryCode() {
-        return countryCode;
+    public String getDialCode() {
+        return dialCode;
     }
 
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
+    public void setDialCode(String dialCode) {
+        this.dialCode = dialCode;
     }
 
     public String getCountryName() {

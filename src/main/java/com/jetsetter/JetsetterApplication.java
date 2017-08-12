@@ -5,7 +5,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 
 @Configuration
 @ComponentScan
@@ -13,7 +12,7 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 
 public class JetsetterApplication {
     @Autowired
-    private ElasticsearchOperations elasticsearchOperations;
+  //  private ElasticsearchOperations elasticsearchOperations;
 
     public static void main(String[] args) {
         SpringApplication.run(JetsetterApplication.class, args);
