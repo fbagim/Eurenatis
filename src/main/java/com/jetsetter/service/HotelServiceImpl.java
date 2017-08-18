@@ -48,6 +48,12 @@ public class HotelServiceImpl implements HotelService{
     }
 
     @Override
+    public List<Hotel> addList(List<Hotel> hotels) {
+        return hotelRepository.save(hotels);
+    }
+
+
+    @Override
     public List<Hotel> findByCountryCode(String code) {
         return hotelRepository.findByCountryCode(code);
     }

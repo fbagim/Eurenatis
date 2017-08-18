@@ -12,6 +12,8 @@ import java.util.List;
 public interface CountryService {
     public Country save(Country country);
 
+    public void save(List<Country> countries);
+
     public void delete(String id);
 
     public Country findOne(String id);

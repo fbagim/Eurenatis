@@ -16,7 +16,7 @@ public class City {
 
     @Indexed(unique = true)
     @JsonProperty("zipcode")
-    private int zipcode;
+    private String zipcode;
 
     @JsonProperty("countryIso")
     private String countryIso;
@@ -24,11 +24,11 @@ public class City {
     @JsonProperty("cityName")
     private String cityName;
 
-    public int getZipcode() {
+    public String getZipcode() {
         return zipcode;
     }
 
-    public void setZipcode(int zipcode) {
+    public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
 

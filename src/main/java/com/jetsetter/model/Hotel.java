@@ -16,7 +16,7 @@ import java.util.Set;
 @Document(collection = "Hotel")
 public class Hotel implements Serializable {
 
-    @Indexed(unique = true)
+    @Id
     @JsonProperty("hotelId")
     private String hotelId;
 
@@ -67,4 +67,19 @@ public class Hotel implements Serializable {
         this.name = name;
     }
 
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public int getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(int zipcode) {
+        this.zipcode = zipcode;
+    }
 }

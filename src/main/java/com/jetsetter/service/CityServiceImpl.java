@@ -26,6 +26,11 @@ public class CityServiceImpl implements CityService{
     }
 
     @Override
+    public void save(List<City> cities) {
+        cityRepository.save(cities);
+    }
+
+    @Override
     public void delete(String id) {
         cityRepository.delete(id);
     }
@@ -41,7 +46,9 @@ public class CityServiceImpl implements CityService{
     }
 
     @Override
-    public List<City> findByCode(String code) {
-        return null;
+    public List<City> findByCountryCode(String code) {
+        return cityRepository.findCountryCode(code);
     }
+
+
 }

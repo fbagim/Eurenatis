@@ -24,11 +24,14 @@ public class CountryServiceImpl  implements CountryService{
     public void setCountryRepository(CountryRepository countryRepository) {
         this.countryRepository = countryRepository;
     }
-
-
     @Override
     public Country save(Country country) {
         return countryRepository.save(country);
+    }
+
+    @Override
+    public void save(List<Country> countries) {
+        countryRepository.save(countries);
     }
 
     @Override

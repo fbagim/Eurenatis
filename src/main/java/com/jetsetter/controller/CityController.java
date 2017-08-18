@@ -41,13 +41,27 @@ public class CityController {
         return new ResponseEntity(city, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/city", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ResponseEntity getCityByCountry(@RequestParam String coutryCode) {
+        List<City> cities=cityService.findByCountryCode(coutryCode);
+        if (cities == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity(cities, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity addCity(@RequestBody City city) {
         City cityRes = cityService.save(city);
         if (cityRes == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<City>(cityRes, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/all", method = RequestMethod.PUT)
+    public ResponseEntity addCity(@RequestBody  List<City> cities) {
+         cityService.save(cities);
+        return new ResponseEntity<List<City>>(cities, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/city", method = RequestMethod.PUT)

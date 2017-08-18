@@ -58,6 +58,11 @@ public class CountryController {
         }
         return new ResponseEntity<List<Country>>(allCountry, HttpStatus.OK);
     }
+    @RequestMapping(value = "/all", method = RequestMethod.PUT)
+    public ResponseEntity addAllCountry(@RequestBody List<Country> countries) {
+        countryService.save(countries);
+        return  new ResponseEntity("saved", HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/{countryCode}", method = RequestMethod.DELETE)
     public ResponseEntity deleteCountry(@PathVariable String id) {

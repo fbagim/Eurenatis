@@ -23,26 +23,23 @@ public class HotelController {
 
     // -------------------Retrieve all students --------------------------------------------
 
-    @RequestMapping(value = "/{countryCode}", method = RequestMethod.GET)
-
-    public ResponseEntity getAllHotels() {
-        List<Hotel> allHotels = hotelService.findAll();
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity getAllHotelsByCountry(@RequestParam String countryCode) {
+        List<Hotel> allHotels = hotelService.findByCountryCode(countryCode);
         if (allHotels.isEmpty()) {
             return new ResponseEntity<List<Country>>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<List<Hotel>>(allHotels, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{countryCode}/{hotelCode}", method = RequestMethod.GET)
-    public ResponseEntity getHotel(@PathVariable String countryCode, @PathVariable String hotelCode) {
-        Hotel  hotel = new Hotel();
+    @RequestMapping(value = "/{hotelCode}", method = RequestMethod.GET)
+    public ResponseEntity getHotel(@PathVariable String hotelCode) {
+        Hotel hotelRes = hotelService.findOne(hotelCode);
 
-        List<Hotel> result = hotelService.findByHotelCodeAndCountryCode(hotelCode, countryCode);
-
-        if (result == null) {
+        if (hotelRes == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity(result, HttpStatus.OK);
+        return new ResponseEntity(hotelRes, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
@@ -52,6 +49,15 @@ public class HotelController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<Hotel>(hotel1Res, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    public ResponseEntity addAllHotels(@RequestBody List<Hotel> hotels) {
+        List<Hotel> hotel1Res = hotelService.addList(hotels);
+        if (hotel1Res == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<Hotel>>(hotel1Res, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
