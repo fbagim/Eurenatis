@@ -10,10 +10,9 @@ import java.util.List;
 /**
  * Created by gim on 8/7/17.
  */
-@Document(collection = "Room")
+
 public class Room implements Serializable {
 
-    @Indexed(unique = true)
     @JsonProperty("roomId")
     private String roomId;
 
