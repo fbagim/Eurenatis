@@ -21,11 +21,10 @@ public class HotelController {
     @Autowired
     HotelService hotelService;
 
-    // -------------------Retrieve all students --------------------------------------------
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity getAllHotelsByCountry(@RequestParam String countryCode) {
-        List<Hotel> allHotels = hotelService.findByCountryCode(countryCode);
+    public ResponseEntity getAllHotelsByCountryAndZipCode(@RequestParam String countryCode, @RequestParam int zipCode) {
+        List<Hotel> allHotels = hotelService.findByCityCodeAndCountryCode(zipCode,countryCode);
         if (allHotels.isEmpty()) {
             return new ResponseEntity<List<Country>>(HttpStatus.NO_CONTENT);
         }

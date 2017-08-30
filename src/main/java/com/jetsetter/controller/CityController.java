@@ -42,8 +42,8 @@ public class CityController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity getCityByCountry(@RequestParam String coutryCode) {
-        List<City> cities=cityService.findByCountryCode(coutryCode);
+    public ResponseEntity getCityByCountry(@RequestParam String countryCode) {
+        List<City> cities=cityService.findByCountryCode(countryCode);
         if (cities == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

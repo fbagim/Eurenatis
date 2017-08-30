@@ -19,6 +19,10 @@ public interface HotelRepository extends MongoRepository<Hotel, String>  {
     public List<Hotel> findByHotelCodeAndCountryCode(String hotelCode, String countryCode);
 
 
+    @Query("{'$and':[ {'zipCode':?0}, {'countryCode':?1} ]}")
+    public List<Hotel> findByCityCodeAndCountryCode(int zipCode, String countryCode);
+
+
     @Query("{'countryCode' : ?0 }")
     public List<Hotel> findByCountryCode(String countryCode);
 

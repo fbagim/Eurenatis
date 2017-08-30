@@ -1,11 +1,18 @@
 package com.jetsetter.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 
 public class RoomAvailability implements Serializable {
+
+    @JsonProperty("roomType")
     private int roomType;
+    @JsonProperty("noOfRooms")
     private int noOfRooms;
+    @JsonProperty("noOfAvilableRooms")
     private int noOfAvilableRooms;
+    @JsonProperty("isAvilable")
     private boolean isAvilable;
 
     public int getRoomType() {

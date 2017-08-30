@@ -27,5 +27,7 @@ public interface HotelService {
 
     public List<Hotel> findByHotelCodeAndCountryCode(String hotelCode, String countryCode);
 
+    public List<Hotel> findByCityCodeAndCountryCode(int cityCode, String countryCode);
+
 
 }

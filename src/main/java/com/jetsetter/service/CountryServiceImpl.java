@@ -30,8 +30,8 @@ public class CountryServiceImpl  implements CountryService{
     }
 
     @Override
-    public void save(List<Country> countries) {
-        countryRepository.save(countries);
+    public List<Country> save(List<Country> countries) {
+       return countryRepository.save(countries);
     }
 
     @Override

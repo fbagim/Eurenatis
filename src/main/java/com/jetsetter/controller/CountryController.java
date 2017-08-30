@@ -50,6 +50,8 @@ public class CountryController {
         return new ResponseEntity<Country>(countryRes, HttpStatus.OK);
     }
 
+
+
     @RequestMapping(value = "/", method = RequestMethod.PUT)
     public ResponseEntity updateCountry(Country country) {
         List<Country> allCountry = countryService.findAll();
@@ -60,8 +62,8 @@ public class CountryController {
     }
     @RequestMapping(value = "/all", method = RequestMethod.PUT)
     public ResponseEntity addAllCountry(@RequestBody List<Country> countries) {
-        countryService.save(countries);
-        return  new ResponseEntity("saved", HttpStatus.OK);
+        List<Country> resp  =  countryService.save(countries);
+        return  new ResponseEntity(resp, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{countryCode}", method = RequestMethod.DELETE)

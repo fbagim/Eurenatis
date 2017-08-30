@@ -28,6 +28,7 @@ public class HotelServiceImpl implements HotelService{
     }
 
     @Override
+
     public Hotel save(Hotel hotel) {
         return hotelRepository.save(hotel);
     }
@@ -61,6 +62,11 @@ public class HotelServiceImpl implements HotelService{
     @Override
     public List<Hotel> findByHotelCodeAndCountryCode(String hotelCode, String countryCode) {
         return  hotelRepository.findByHotelCodeAndCountryCode(hotelCode,countryCode);
+    }
+
+    @Override
+    public List<Hotel> findByCityCodeAndCountryCode(int cityCode, String countryCode) {
+        return hotelRepository.findByCityCodeAndCountryCode(cityCode, countryCode);
     }
 
 
