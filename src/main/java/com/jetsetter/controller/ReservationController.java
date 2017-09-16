@@ -1,10 +1,10 @@
 package com.jetsetter.controller;
 
-import com.jetsetter.model.AvailabilityData;
-import com.jetsetter.model.City;
-import com.jetsetter.model.Room;
-import com.jetsetter.service.CityService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.jetsetter.model.*;
+import com.jetsetter.model.hotelbeds.HotelBedsAvailability;
 import com.jetsetter.service.ReservationService;
+import com.jetsetter.util.AvailabilityRequestFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +22,13 @@ public class ReservationController {
     @Autowired
     ReservationService reservationService;
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseEntity checkAvilability(@RequestBody AvailabilityData availabilityData) {
-        List<Room> roomList = reservationService.checkHotelAvailability(availabilityData);
-        if (roomList.isEmpty()) {
-            return new ResponseEntity<List<Room>>(HttpStatus.NO_CONTENT);
+    @RequestMapping(value = "/checkAvailability", method = RequestMethod.POST)
+    public ResponseEntity checkAvilability(@RequestBody HotelBedsAvailability hotelBedsAvailability, @RequestParam String requestType) throws JsonProcessingException {
+        AvailabilityRequestFactory.getRequest(requestType, hotelBedsAvailability);
+        String resp = reservationService.checkHotelAvailability(hotelBedsAvailability, requestType);
+        if (resp.isEmpty()) {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<Room>>(roomList, HttpStatus.OK);
+        return new ResponseEntity(resp, HttpStatus.OK);
     }
 }

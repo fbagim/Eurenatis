@@ -1,8 +1,11 @@
 package com.jetsetter.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jetsetter.model.AvailabilityData;
+import com.jetsetter.model.AvailabilityRequestData;
 import com.jetsetter.model.City;
 import com.jetsetter.model.Room;
+import com.jetsetter.model.hotelbeds.HotelBedsAvailability;
 
 import java.util.List;
 
@@ -11,7 +14,6 @@ import java.util.List;
  */
 
 public interface ReservationService {
-    public List<Room>  checkHotelAvailability(AvailabilityData availabilityData);
-    public List<Room>  bookHotel(AvailabilityData availabilityData);
+    public String checkHotelAvailability(HotelBedsAvailability availabilityData, String requestType) throws JsonProcessingException;
 
 }

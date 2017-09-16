@@ -1,12 +1,20 @@
 package com.jetsetter.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.google.gson.Gson;
 import com.jetsetter.model.*;
+import com.jetsetter.model.hotelbeds.HotelBedsAvailability;
 import com.jetsetter.respository.CityRepository;
 import com.jetsetter.respository.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,30 +27,23 @@ public class ReservationServiceImpl implements ReservationService {
     @Autowired(required = true)
     private HotelRepository hotelRepository;
 
+    public String checkHotelAvailability(HotelBedsAvailability hotelBedsAvailability, String requestType) throws JsonProcessingException {
+        String walletBalanceUrl = "http://testapi.hotelbeds.com/hotel-api/1.0/hotels";
 
-    @Override
-    public List<Room> checkHotelAvailability(AvailabilityData availabilityData) {
-        Hotel hotel = hotelRepository.findOne(availabilityData.getHotelCode());
-        List<Room> avilabeRooms = new ArrayList<>();
-        if (hotel != null) {
-            List<Room> roomList = hotel.getRooms();
-            for (Room room : roomList) {
-                List<BookingCalender> bookingCalenders = room.getBookings();
-                for (BookingCalender bookingCalender : bookingCalenders) {
-                    if (bookingCalender.getFromDate().getTime() != availabilityData.getFromDate().getTime() && bookingCalender.getToDate().getTime() != availabilityData.getToDate().getTime()) {
-                        if ((bookingCalender.getToDate().getTime() - bookingCalender.getFromDate().getTime()) != (availabilityData.getToDate().getTime() - availabilityData.getFromDate().getTime())) {
-                            avilabeRooms.add(room);
-                        }
-                    }
-                }
-            }
-            return avilabeRooms;
-        }
-        return null;
-    }
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set("Content-Type", "application/json");
+        httpHeaders.set("Accept", "application/json");
+        httpHeaders.set("Api-Key", "gfhpht2ffsfejd88g7pcnexe");
 
-    @Override
-    public List<Room>  bookHotel(AvailabilityData availabilityData) {
-        return null;
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(hotelBedsAvailability);
+
+
+        HttpEntity <String> httpEntity = new HttpEntity <String> (json, httpHeaders);
+
+        RestTemplate restTemplate = new RestTemplate();
+        String response = restTemplate.postForObject(walletBalanceUrl, httpEntity, String.class);
+
+        return response;
     }
 }
